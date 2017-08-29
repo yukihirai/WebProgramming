@@ -1,6 +1,7 @@
-
+package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,17 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.UserDao;
+import beans.UserBeans;
+
 /**
- * Servlet implementation class Login
+ * Servlet implementation class UserList
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/UserList")
+public class UserList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public UserList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,9 +33,17 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+
+		UserDao userDao = new UserDao();
+		List<UserBeans>userList = userDao.findAll();
+
+		request.setAttribute("userList",userList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userList.jsp");
 		dispatcher.forward(request, response);
+
 	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
