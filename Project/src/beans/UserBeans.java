@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 
+import controller.UtilLogic;
+
 public class UserBeans implements Serializable{
 	private String id;
 	private String login_id;
@@ -41,6 +43,11 @@ public class UserBeans implements Serializable{
 	public UserBeans(String name) {
 		this.name = name;
 	}
+	public UserBeans(String login_id,String name,String birth_date) {
+		this.login_id = login_id;
+		this.name = name;
+		this.birth_date = birth_date;
+	}
 
 	public String getId() {
 		return id;
@@ -61,7 +68,9 @@ public class UserBeans implements Serializable{
 		this.name = name;
 	}
 	public String getBirth_date() {
-//		UtilLogic.convertDate(birth_date);
+		return UtilLogic.convertDate(birth_date);
+	}
+	public String getNoConvertBirth_date() {
 		return birth_date;
 	}
 	public void setBirth_date(String birth_date) {
@@ -73,14 +82,14 @@ public class UserBeans implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getCreate_date() {
-		return create_date;
+	public String getCreate_date()  {
+		return UtilLogic.convertDateTime(create_date);
 	}
 	public void setCreate_date(String create_date) {
 		this.create_date = create_date;
 	}
 	public String getUpdate_date() {
-		return update_date;
+		return UtilLogic.convertDateTime(update_date);
 	}
 	public void setUpdate_date(String update_date) {
 		this.update_date = update_date;

@@ -31,12 +31,54 @@ public class UtilLogic {
 		pass = DatatypeConverter.printHexBinary(bytes);
 		return pass;
 	}
-	public static String convertDate(String date) throws ParseException {
-		String dateStr = date;
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date cDate = f.parse(dateStr);
-		SimpleDateFormat f2 = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分ss秒");
-		String conDate = f2.format(cDate);
+
+
+	/**
+	 * dateTime型を"yyyy年MM月dd日 HH時mm分ss秒"に変換する
+	 * @param dateTime
+	 * @return
+	 */
+	public static String convertDateTime(String dateTime)  {
+		String conDateTime = null;
+
+		try {
+			String dateStr = dateTime;
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+			Date cDateTime;
+			cDateTime = f.parse(dateStr);
+
+			SimpleDateFormat f2 = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分ss秒");
+//			SimpleDateFormat f2 = new SimpleDateFormat("yyyy年MM月dd日");
+			conDateTime = f2.format(cDateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return dateTime;
+		}
+		return conDateTime;
+	}
+
+
+	/**
+	 * date型を"yyyy年MM月dd日"に変換する
+	 * @param date
+	 * @return
+	 */
+	public static String convertDate(String date)  {
+		String conDate = null;
+
+		try {
+			String dateStr = date;
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+			Date cDate;
+			cDate = f.parse(dateStr);
+
+			SimpleDateFormat f2 = new SimpleDateFormat("yyyy年MM月dd日");
+			conDate = f2.format(cDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return date;
+		}
 		return conDate;
 	}
 

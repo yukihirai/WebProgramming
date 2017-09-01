@@ -23,7 +23,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT id , login_id , name , birth_date , password , create_date , update_date FROM user";
+			String sql = "SELECT id , login_id , name , birth_date , password , create_date , update_date FROM user WHERE id>1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			ResultSet rs = pStmt.executeQuery();
@@ -61,7 +61,6 @@ public class UserDao {
 	public boolean findCheckLogin(String login_id , String pass){
 		boolean result = false;
 
-
 		Connection conn = null;
 
 		try {
@@ -79,7 +78,8 @@ public class UserDao {
 			}
 
 			pass = UtilLogic.convertMd5(pass);
-
+			System.out.println(pass);
+			System.out.println(password);
 
 			if(password.equals(pass)) {
 				result =  true;
@@ -147,7 +147,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT login_id , name , birth_date , password , create_date , update_date FROM user WHERE id=?";
+			String sql = "SELECT * FROM user WHERE id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1,id);
 			ResultSet rs = pStmt.executeQuery();
@@ -160,8 +160,7 @@ public class UserDao {
 				String create_date = rs.getString("create_date");
 				String update_date = rs.getString("update_date");
 
-				user = new UserBeans (login_id,name,birth_date,password,create_date,update_date);
-
+				user = new UserBeans (id,login_id,name,birth_date,password,create_date,update_date);
 
 			}
 		}catch(SQLException e) {
@@ -181,7 +180,210 @@ public class UserDao {
 		return user;
 	}
 
+	public boolean findCheckLoginId(String Login_id){
+		boolean result = false;
 
+
+		Connection conn = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT login_id FROM user WHERE login_id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, Login_id);
+			ResultSet rs = pStmt.executeQuery();
+
+			if(!rs.next()) {
+				result = true;
+			}
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return result;
+	}
+	public boolean insertUser(String login_id,String name,String birth_date,String password){
+		Connection conn = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "INSERT INTO user (login_id,name,birth_date,password,create_date,update_date) VALUES(?,?,?,?,NOW(),NOW())";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, login_id);
+			pStmt.setString(2, name);
+			pStmt.setString(3, birth_date);
+
+			password = UtilLogic.convertMd5(password);
+			pStmt.setString(4, password);
+
+			pStmt.executeUpdate();
+
+
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean upDateUser(String id,String name,String birth_date,String password){
+		Connection conn = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "UPDATE user SET name=?, birth_date=?, password=?, update_date=now() WHERE id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, birth_date);
+
+			password = UtilLogic.convertMd5(password);
+			pStmt.setString(3, password);
+			pStmt.setString(4, id);
+
+			pStmt.executeUpdate();
+
+
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+	public boolean noPassUpDateUser(String id,String name,String birth_date){
+		Connection conn = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "UPDATE user SET name=?, birth_date=?, update_date=now() WHERE id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, birth_date);
+			pStmt.setString(3, id);
+
+			pStmt.executeUpdate();
+
+
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean deleteUser(String id){
+		Connection conn = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "DELETE FROM user WHERE id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+
+			pStmt.executeUpdate();
+
+
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+	public List<UserBeans>findSelect(String login_id,String name,String birth_date1,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT login_id , name , birth_date FROM user WHERE login_id=? AND name LIKE '%?%' AND birth_date>=? AND birth_date<=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2,name);
+			pStmt.setString(3,birth_date1);
+			pStmt.setString(4,birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
 
 
 }

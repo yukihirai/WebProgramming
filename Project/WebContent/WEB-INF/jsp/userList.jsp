@@ -5,17 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>ユーザ一覧</title>
+
 </head>
 <body>
-<form action="/UserManegment/Logout" method="post">
+<form action="/UserManegment/UserRetri" method="post">
 <div style="background-color:#808080;" align ="right"><font size="3" color="white">${sessionScope.name}さん　　<a href="/UserManegment/Logout">ログアウト</a></font></div>
 <div align = center><font size='7'>ユーザ一覧</font></div>
 <div align ="right"><a href="/UserManegment/UserRegi">新規登録</a></div>
 <br>
 <br>
 <div align ="center">ログインID　<input type ="text"style="width:250px;" name="id" ></div><br>
-<div align ="center">ユーザ名　　<input type ="text"style="width:250px;" name="user"></div><br>
-<div align ="center">生年月日　　<input type ="date"style="width:150px;" name="birth"placeholder="年/月/日"> ～ <input type ="date"style="width:150px;" name="birth"placeholder="年/月/日"><br></div>
+<div align ="center">ユーザ名　　<input type ="text"style="width:250px;" name="name"></div><br>
+<div align ="center">生年月日　　<input type ="date"style="width:150px;" name="birth_date1"placeholder="年/月/日"> ～ <input type ="date"style="width:150px;" name="birth_date2"placeholder="年/月/日"><br></div>
 <br>
 <p align ="right"><input type="submit"value="検索"></p>
 <div align = "center"><table border ="1"></div>
@@ -38,12 +39,11 @@ for(UserBeans list : users){%>
 	    <td class="center"><%=list.getBirth_date()%></td>
 		<td>
 			<input type="button" onClick="location.href='/UserManegment/UserInfo?id=<%=list.getId()%>'"value="詳細"style="background-color: skyblue;">
-  			<input type="button" onClick="location.href='userUpdate.jsp'"value="更新"style="background-color: yellowgreen;">
-  			<input type="button" onClick="location.href='userDelete.html'"value="削除"style="background-color: tomato;">
+  			<span class="example1"><input type="button" onClick="location.href='/UserManegment/UserUpdate?id=<%=list.getId()%>'"value="更新"style="background-color: yellowgreen;"></span>
+  			<input type="button" onClick="location.href='/UserManegment/UserDelete?id=<%=list.getId()%>'"value="削除"style="background-color: tomato;">
   		</td>
 	</tr>
 <%}%>
-
 
 
 </table>
