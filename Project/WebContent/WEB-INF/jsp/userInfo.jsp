@@ -7,7 +7,7 @@
 <title>ユーザ情報詳細参照</title>
 </head>
 <body>
-<p style="background-color:#808080;" align ="right"><font size="3" color="white">${sessionScope.name}さん　　<a href="/UserManegment/Logout">ログアウト</a></font></p>
+<p style="background-color:#808080;" align ="right"><font size="3" color="white">${UserLoginidName.name}さん　　<a href="/UserManegment/Logout">ログアウト</a></font></p>
 <p align ="center"><font size='7'>ユーザ情報詳細参照</font></p>
 <br>
 <div align="center"><font size="5">

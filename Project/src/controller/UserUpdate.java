@@ -61,7 +61,7 @@ public class UserUpdate extends HttpServlet {
 
 		}else {
 
-			if(pass1 == null) {
+			if(pass1.equals("")) {
 				UserDao userDao = new UserDao();
 				boolean result = userDao.noPassUpDateUser(id,name,birth_date);
 

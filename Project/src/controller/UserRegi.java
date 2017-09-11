@@ -49,35 +49,40 @@ public class UserRegi extends HttpServlet {
 
 		if(!pass2.equals(pass1)) {
 			request.setAttribute("errorMsg", "パスワードを入力しなおしてください。");
+			request.setAttribute("login_id", login_id);
+			request.setAttribute("name", name);
+			request.setAttribute("birth_date", birth_date);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userRegi.jsp");
 			dispatcher.forward(request, response);
-		}
 
-		UserDao userDao = new UserDao();
-		boolean result = userDao.findCheckLoginId(login_id);
+		}else {
 
-		if(result) {
-			UserDao uDao = new UserDao();
-			boolean userRegi = uDao.insertUser(login_id,name,birth_date,pass1);
+			UserDao userDao = new UserDao();
+			boolean result = userDao.findCheckLoginId(login_id);
 
-			if(userRegi) {
-				request.setAttribute("infoMsg", "ユーザ情報の登録に成功しました。");
+			if(result) {
+				UserDao uDao = new UserDao();
+				boolean userRegi = uDao.insertUser(login_id,name,birth_date,pass1);
 
-				response.sendRedirect("UserList");
+				if(userRegi) {
+					request.setAttribute("infoMsg", "ユーザ情報の登録に成功しました。");
+
+					response.sendRedirect("UserList");
+
+				}else {
+					request.setAttribute("errorMsg", "入力された内容は正しくありません。");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userRegi.jsp");
+					dispatcher.forward(request, response);
+				}
 
 			}else {
-				request.setAttribute("errorMsg", "入力された内容は正しくありません。");
+				request.setAttribute("errorMsg", "そのログインIDは、すでに登録されています。");
+
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userRegi.jsp");
 				dispatcher.forward(request, response);
 			}
 
-		}else {
-			request.setAttribute("errorMsg", "そのログインIDは、すでに登録されています。");
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userRegi.jsp");
-			dispatcher.forward(request, response);
 		}
 
 	}
-
 }

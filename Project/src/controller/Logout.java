@@ -31,7 +31,7 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.removeAttribute("name");
+		session.removeAttribute("UserLoginidName");
 
 		request.setAttribute("logout", "ログアウトしました。");
 

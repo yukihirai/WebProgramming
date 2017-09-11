@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="/UserManegment/UserDelete" method="post">
-<p style="background-color:#808080;" align ="right"><font size="3" color="white">${sessionScope.name}さん　　<a href="/UserManegment/Logout">ログアウト</a></font></p>
+<p style="background-color:#808080;" align ="right"><font size="3" color="white">${UserLoginidName.name}さん　　<a href="/UserManegment/Logout">ログアウト</a></font></p>
 <p align ="center"><font size='7'>ユーザ削除確認</font></p>
 
 <%@ page import="beans.UserBeans"%>

@@ -23,7 +23,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT id , login_id , name , birth_date , password , create_date , update_date FROM user WHERE id>1";
+			String sql = "SELECT id , login_id , name , birth_date , password , create_date , update_date FROM UserList WHERE id>1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			ResultSet rs = pStmt.executeQuery();
@@ -66,7 +66,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT password FROM user WHERE login_id = ?";
+			String sql = "SELECT password FROM UserList WHERE login_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, login_id);
 
@@ -107,7 +107,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT name FROM user WHERE login_id=?";
+			String sql = "SELECT name FROM UserList WHERE login_id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, login_id);
 
@@ -147,7 +147,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT * FROM user WHERE id=?";
+			String sql = "SELECT * FROM UserList WHERE id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1,id);
 			ResultSet rs = pStmt.executeQuery();
@@ -189,7 +189,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT login_id FROM user WHERE login_id=?";
+			String sql = "SELECT login_id FROM UserList WHERE login_id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, Login_id);
 			ResultSet rs = pStmt.executeQuery();
@@ -218,7 +218,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "INSERT INTO user (login_id,name,birth_date,password,create_date,update_date) VALUES(?,?,?,?,NOW(),NOW())";
+			String sql = "INSERT INTO UserList (login_id,name,birth_date,password,create_date,update_date) VALUES(?,?,?,?,NOW(),NOW())";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, login_id);
 			pStmt.setString(2, name);
@@ -253,7 +253,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "UPDATE user SET name=?, birth_date=?, password=?, update_date=now() WHERE id=?";
+			String sql = "UPDATE UserList SET name=?, birth_date=?, password=?, update_date=now() WHERE id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, name);
 			pStmt.setString(2, birth_date);
@@ -287,7 +287,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "UPDATE user SET name=?, birth_date=?, update_date=now() WHERE id=?";
+			String sql = "UPDATE UserList SET name=?, birth_date=?, update_date=now() WHERE id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, name);
 			pStmt.setString(2, birth_date);
@@ -319,7 +319,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "DELETE FROM user WHERE id=?";
+			String sql = "DELETE FROM UserList WHERE id=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, id);
 
@@ -350,7 +350,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT login_id , name , birth_date FROM user WHERE login_id=? AND name LIKE '%?%' AND birth_date>=? AND birth_date<=?";
+			String sql = "SELECT login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE '%?%' AND birth_date>=? AND birth_date<=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1,login_id);
 			pStmt.setString(2,name);

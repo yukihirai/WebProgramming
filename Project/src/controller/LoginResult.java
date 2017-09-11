@@ -34,15 +34,14 @@ public class LoginResult extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -59,8 +58,9 @@ public class LoginResult extends HttpServlet {
 			UserDao uDao = new UserDao();
 			List<UserBeans>userList = uDao.findName(login_id);
 			for(UserBeans list : userList) {
+				UserBeans userBeans = new UserBeans(login_id,list.getName(),"birth_date");
 				HttpSession session = request.getSession();
-				session.setAttribute("name",list.getName());
+				session.setAttribute("UserLoginidName",userBeans);
 			}
 
 			response.sendRedirect("UserList");
