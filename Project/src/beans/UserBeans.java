@@ -48,6 +48,12 @@ public class UserBeans implements Serializable{
 		this.name = name;
 		this.birth_date = birth_date;
 	}
+	public UserBeans(String id,String login_id,String name,String birth_date) {
+		this.id=id;
+		this.login_id=login_id;
+		this.name=name;
+		this.birth_date=birth_date;
+	}
 
 	public String getId() {
 		return id;

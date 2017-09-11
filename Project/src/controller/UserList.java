@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import DAO.UserDao;
 import beans.UserBeans;
@@ -32,6 +33,16 @@ public class UserList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+
+		UserBeans userBeans = (UserBeans)session.getAttribute("UserLoginidName");
+
+
+		if(userBeans.getName() == null) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
+		}
 
 
 		UserDao userDao = new UserDao();

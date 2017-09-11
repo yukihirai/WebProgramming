@@ -350,21 +350,62 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE '%?%' AND birth_date>=? AND birth_date<=?";
+			String sql = "SELECT id , login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE ? AND birth_date>=? AND birth_date<=? AND id>1";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1,login_id);
-			pStmt.setString(2,name);
+			pStmt.setString(2,"%"+name+"%");
 			pStmt.setString(3,birth_date1);
 			pStmt.setString(4,birth_date2);
 
 			ResultSet rs = pStmt.executeQuery();
 
 			while (rs.next()) {
+				String id = rs.getString("id");
 				String login_id1 = rs.getString("login_id");
 				String name1 = rs.getString("name");
 				String birth_date = rs.getString("birth_date");
 
-				UserBeans user = new UserBeans (login_id1,name1,birth_date);
+				UserBeans user = new UserBeans (id, login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+	public List<UserBeans>findSelectBirth2(String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT  id, login_id , name , birth_date FROM UserList WHERE birth_date<=? AND id>1";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
 
 				userList.add(user);
 			}
@@ -385,5 +426,550 @@ public class UserDao {
 		return userList;
 	}
 
+	public List<UserBeans>findSelectBirth1(String birth_date1){
+		Connection conn = null;
 
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT  id, login_id , name , birth_date FROM UserList WHERE birth_date>=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,birth_date1);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectBirth1Birth2(String birth_date1, String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE birth_date>=? AND birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,birth_date1);
+			pStmt.setString(2,birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectName(String name){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT  id , login_id , name , birth_date FROM UserList WHERE name LIKE ? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,"%"+name+"%");
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				System.out.println(id);
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectNameBirth2(String name,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, login_id , name , birth_date FROM UserList WHERE name LIKE ? AND birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,"%"+name+"%");
+			pStmt.setString(2, birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectNameBirth1(String name,String birth_date1){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, login_id , name , birth_date FROM UserList WHERE name LIKE ? AND birth_date>=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,"%"+name+"%");
+			pStmt.setString(2, birth_date1);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectNameBirth1Birth2(String name,String birth_date1,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, login_id , name , birth_date FROM UserList WHERE name LIKE ? AND birth_date>=? AND birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,"%"+name+"%");
+			pStmt.setString(2, birth_date1);
+			pStmt.setString(3, birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLogin(String login_id){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, login_id , name , birth_date FROM UserList WHERE login_id=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginBirth2(String login_id,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, login_id , name , birth_date FROM UserList WHERE login_id=? AND birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginBirth1(String login_id,String birth_date1){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE login_id=? AND birth_date>=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, birth_date1);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginBirth1Birth2(String login_id,String birth_date1,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE login_id=? AND birth_date>=? birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, birth_date1);
+			pStmt.setString(3, birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginName(String login_id,String name){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE ? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, "%"+name+"%");
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginNameBirth2(String login_id,String name,String birth_date2){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE ? AND birth_date<=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, "%"+name+"%");
+			pStmt.setString(3, birth_date2);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public List<UserBeans>findSelectLoginNameBirth1(String login_id,String name,String birth_date1){
+		Connection conn = null;
+
+		List<UserBeans>userList = new ArrayList<UserBeans>();
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id,login_id , name , birth_date FROM UserList WHERE login_id=? AND name LIKE ? AND birth_date>=? AND id>1 ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,login_id);
+			pStmt.setString(2, "%"+name+"%");
+			pStmt.setString(3, birth_date1);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String login_id1 = rs.getString("login_id");
+				String name1 = rs.getString("name");
+				String birth_date = rs.getString("birth_date");
+
+				UserBeans user = new UserBeans (id,login_id1,name1,birth_date);
+
+				userList.add(user);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+
+		}finally {
+			if(conn!=null) {
+				try {
+					conn.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
 }

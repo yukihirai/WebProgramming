@@ -14,7 +14,7 @@
 <div align ="right"><a href="/UserManegment/UserRegi">新規登録</a></div>
 <br>
 <br>
-<div align ="center">ログインID　<input type ="text"style="width:250px;" name="id" ></div><br>
+<div align ="center">ログインID　<input type ="text"style="width:250px;" name="login_id" ></div><br>
 <div align ="center">ユーザ名　　<input type ="text"style="width:250px;" name="name"></div><br>
 <div align ="center">生年月日　　<input type ="date"style="width:150px;" name="birth_date1"placeholder="年/月/日"> ～ <input type ="date"style="width:150px;" name="birth_date2"placeholder="年/月/日"><br></div>
 <br>

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.UserBeans;
+
 /**
  * Servlet implementation class Login
  */
@@ -32,10 +34,10 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		String name = (String)session.getAttribute("name");
+		UserBeans userBeans = (UserBeans)session.getAttribute("UserLoginidName");
 
 
-		if(name == null) {
+		if(userBeans.getName() == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 		}else {
